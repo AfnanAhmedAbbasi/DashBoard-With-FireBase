@@ -1,42 +1,71 @@
 // Posts.jsx
 import React, { useEffect, useState } from 'react';
 import PostCard from '../components/AFPostCart';
-import { addDummyPostToFirestore, db, fetchPostsFromFirestore } from '../firebase/FireBaseFunctions';
-
+import {  fetchPostsFromFirestore } from '../firebase/FireBaseFunctions';
+import AFScreenHeader from '../components/AFScreenHeader';
+import AFButton from '../components/AFButton';
+import { useNavigate } from 'react-router-dom';
 
 const Posts = () => {
     const [posts, setPosts] = useState([]);
+    const navigate = useNavigate();
+    const [loader, setLoader] = useState(false);
 
     useEffect(() => {
         const getPosts = async () => {
+            setLoader(true)
             const fetchedPosts = await fetchPostsFromFirestore();
+            setLoader(false)
             setPosts(fetchedPosts);
         };
         getPosts();
     }, []);
 
-    const addPostToFireStore = async()=>{
-        await addDummyPostToFirestore();
-    }
 
+    
 
+    return (
+        <div className='flex flex-col h-screen'>
 
-    return ( 
-        <div className="px-4 py-6 flex flex-col items-center justify-center ">
-            <h1 className="text-2xl font-bold mb-4 text-center" >Posts</h1>
-            <div className='flex flex-wrap'>
+            <div className=" -py-6">
+                <AFScreenHeader
+                    Title='Posts'
+                    actionButtons={[
+                        {
+                            display: () => (
+                                <AFButton lable="Make a Post" onClick={() => navigate('/PostForm')} />
+                            )
+                        }
+                    ]}
+                />
+            </div>
 
-            {posts.length > 0 ? (
-                posts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                ))
-            ) : (
-                <p className="text-center">No posts available</p>
+            {loader && (
+                <div className="">
+                    <img
+                        src='https://i.gifer.com/origin/b4/b4d657e7ef262b88eb5f7ac021edda87_w200.gif'
+                        alt="Loading..."
+                        className="loader"
+                    />
+                </div>
             )}
-            </div>
-            <div>
-            <button onClick={() => addPostToFireStore()}>Add Post</button>
-            </div>
+            {!loader && (
+
+                <div className='flex-grow overflow-y-auto p-4'>
+                    {posts.length > 0 ? (
+                        <div className='flex flex-wrap gap-4'>
+                            {posts.map((post) => (
+                                <PostCard key={post.id} post={post} />
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="text-center">No posts available</p>
+                    )}
+                </div>
+
+            )};
+          
+
         </div>
     );
 };

@@ -15,6 +15,11 @@ import Posts from '../Dashboard/Posts';
 import Albums from '../Dashboard/Albums';
 import Comments from '../Dashboard/Comments';
 import UserForm from '../Dashboard/UserForm';
+import PostForm from '../Dashboard/PostForm';
+import CommentForm from '../Dashboard/CommentForm';
+import AlbumForm from '../Dashboard/AlbumsForm';
+import AlbumsForm from '../Dashboard/AlbumsForm';
+import PhotosForm from '../Dashboard/PhotosForm';
 
 const Home = () => {
     const navigate=useNavigate()
@@ -34,7 +39,8 @@ const Home = () => {
             </div>
             <div className='div2'>
                 <Routes>
-                    <Route path='/HOME' element={<h1>Welcome to the Dashboard</h1>} />
+                    <Route path='/HOME' element={<h1 className='text-3xl asd w-full     '> <p>Welcome to the Dashboard!</p>
+                    </h1>} /> 
                     <Route path='user' element={<Users />} />
                     <Route path='comments' element={<Comments />} />
                     <Route path='photos' element={<Photos />} />
@@ -42,6 +48,10 @@ const Home = () => {
                     <Route path='posts' element={<Posts />} />
                     <Route path='albums' element={<Albums />} />
                     <Route path='userform' element={<UserForm/>}/>
+                    <Route path='postform' element={<PostForm/>}/>
+                    <Route path='commentform' element={<CommentForm/>}/>
+                    <Route path='albumsform' element={<AlbumsForm/>}/>
+                    <Route path='photosform' element={<PhotosForm/>}/>
                 </Routes>
 
                 

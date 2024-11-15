@@ -1,8 +1,8 @@
 
 import { app } from "./FireBaseConfiq";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { 
-    collection, addDoc, getDocs, deleteDoc, doc, getDoc, getFirestore, setDoc, updateDoc 
+import {
+    collection, addDoc, getDocs, deleteDoc, doc, getDoc, getFirestore, setDoc, updateDoc
 } from "firebase/firestore";
 
 const auth = getAuth(app);
@@ -137,18 +137,98 @@ export const fetchPostsFromFirestore = async () => {
     return posts;
 };
 
-export const addDummyPostToFirestore = async () => {
-    const dummyPost = {
-        title: "Simple Post Example",
-        comments: [{ user: "John", comment: "Nice post!" }],
-        imageUrl: "https://via.placeholder.com/150",
-    };
-
+export const addPostsToFirestore = async (obj) => {
     try {
         const userCollectionRef = collection(db, "posts");
-        await addDoc(userCollectionRef, dummyPost);  // Pass dummyPost directly here
+        await addDoc(userCollectionRef, obj);
         console.log("Dummy post added successfully.");
     } catch (error) {
         console.error("Error adding dummy post:", error);
     }
 };
+
+
+
+
+
+export const addCommentsToFireStore = async (comments) => {
+
+    ;
+    try {
+        const docRef = collection(db, 'comments');
+        await addDoc(docRef, comments)
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+
+export const fetchCommentsFromFireStore = async () => {
+    try {
+        const docRef = collection(db, "comments");
+        const snapshot = await getDocs(docRef);
+        const comments = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        return comments;
+    } catch (error) {
+        console.log("Error Fetching Comments", error);
+        return [];
+    }
+};
+
+
+export const addAlbumsToFireStore = async (obj) => {
+
+    try {
+        const docRef = collection(db, "albums")
+        await addDoc(docRef, obj)
+    } catch (error) {
+        console.log("Error Writing Data", error);
+    }
+
+}
+
+export const fetchAlbumsFromFireStore = async () => {
+    try {
+        const docRef = collection(db, 'albums');
+        const snapshot = await getDocs(docRef);
+        const albums = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+        return albums;
+    } catch (error) {
+        console.error("Error fetching albums: ", error);
+        return [];
+    }
+}
+
+
+export const addPhotosToFireStore = async (photo) => {
+    try {
+        const docRef = collection(db, 'photos')
+        await addDoc(docRef, photo)
+        alert("Photo added")
+    } catch (error) {
+
+    }
+}
+
+export const fetchPhotosFromFireStore=async()=>{
+    try {
+        const docRef=collection(db,'photos');
+        const snapshot=await getDocs(docRef)
+        const photos =snapshot.docs.map((doc)=>({
+            id:doc.id,
+            ...doc.data()
+        }))
+        return photos
+    } catch (error) {
+        console.error("Error fetching albums: ", error);
+        return [];
+    }
+}

@@ -12,7 +12,7 @@ const AFButton = (props) => {
                     onClick={onClick}
                     disabled={disabled}
                     loading={loading}
-                    className='btn w-[8vw]'
+                    className='btn w-[10vw] p-5'
                     style={{
                         backgroundColor:'rgb(44,44,44)', 
                         borderColor: 'rgb(44,44,44)',

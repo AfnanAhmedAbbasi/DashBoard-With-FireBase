@@ -45,6 +45,19 @@ const SignUp = () => {
                     onChange={(e) => setModel({ ...model, password: e.target.value })}
                 />
             </label>
+            <input
+                type="number"
+                placeholder="Enter Contact Number"
+                value={model.phone || ''} 
+               
+                onChange={(e) => setModel({ ...model, phone: e.target.value })}
+            />
+            <input
+                type="text"
+                placeholder="Enter Website"
+                value={model.website || ''} 
+                onChange={(e) => setModel({ ...model, website: e.target.value })}
+            />
             <button className="createAccBtn" onClick={handleSignUp}>Create Account</button>
             <p>Already have an account? <button onClick={() => navigate('/login')}>Login</button></p>
         </div>
